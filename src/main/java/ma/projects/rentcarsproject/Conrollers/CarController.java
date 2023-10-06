@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller @AllArgsConstructor
@@ -52,6 +53,8 @@ public class CarController {
         Optional<Car> carOptional = carService.getCarById(id);
         Car car = carOptional.orElse(null); // ou carOptional.orElseThrow(() -> new RuntimeException("Car not found"));
 
+        List<String> imageUrls = car.getImageUrls();
+        model.addAttribute("imageUrls",imageUrls);
         model.addAttribute("car", car);
         return "admin/editCar";
     }
@@ -61,6 +64,10 @@ public class CarController {
         return "redirect:/admin/dashboard?keyword="+car1.getMake();
     }
 
+    @GetMapping("/sidbar")
+    public String sidbar(){
+        return "navs/sideBar";
+    }
 
 
 }

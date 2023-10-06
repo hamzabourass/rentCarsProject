@@ -29,7 +29,7 @@ public class RentCarsProjectApplication {
         SpringApplication.run(RentCarsProjectApplication.class, args);
     }
 
-    //@Bean
+    @Bean
     CommandLineRunner start(CarService carService
             , LocationRepository locationRepository
             , CategoryRepository categoryRepository, CarInspecReportRepository carInspecReportRepository){
@@ -73,23 +73,15 @@ public class RentCarsProjectApplication {
             carService.createCar(car3);
             carService.createCar(car);
             carService.createCar(car2);
-            carService.addInspectionReport(car.getId(),carInspectionReport);
-            carService.addInspectionReport(car2.getId(),carInspectionReport1);
-            carService.addInspectionReport(car3.getId(),carInspectionReport1);
-            carService.addCarToLocation(car.getId(), location1.getName());
-            carService.addCarToCategory(car.getId(), category1.getName());
-            carService.addCarToLocation(car2.getId(), location1.getName());
-            carService.addCarToCategory(car3.getId(), category1.getName());
-            carService.addCarToLocation(car3.getId(), location1.getName());
-            carService.addCarToCategory(car2.getId(), category1.getName());
-            carService.removeCarFromCategory(car.getId(),category1.getName());
-            carService.removeCarFromLocation(car2.getId(), location1.getName());
             List<String> imageUrl1 = new ArrayList<>();
-            imageUrl1.add("src/main/resources/carPhotos/Dacia Logan.jpg");
+            imageUrl1.add("DaciaLogan.jpg");
             List<String> imageUrl2 = new ArrayList<>();
-            imageUrl2.add("src/main/resources/carPhotos/Toyota Hybrid.jpg");
+            imageUrl2.add("Toyota Hybrid.jpg");
+            List<String> imageUrl3 = new ArrayList<>();
+            imageUrl3.add("R.jpg");
             carService.addImageUrlsToCar(car.getId(),imageUrl2);
             carService.addImageUrlsToCar(car2.getId(),imageUrl1);
+            carService.addImageUrlsToCar(car3.getId(),imageUrl3);
 
         };
     }
