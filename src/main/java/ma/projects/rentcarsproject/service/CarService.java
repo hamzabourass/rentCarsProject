@@ -2,6 +2,8 @@ package ma.projects.rentcarsproject.service;
 
 import ma.projects.rentcarsproject.entities.Car;
 import ma.projects.rentcarsproject.entities.CarInspectionReport;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,7 @@ public interface CarService {
     public void removeCarFromLocation(Long carId, String name);
 
     public void addImageUrlsToCar(Long carId, List<String> imageUrls);
-    public List<Car> search(String keyword);
+    public Page<Car> search(String keyword, Pageable pageable);
     public void addCarToCategory(Long id,String categoryName);
     public void removeCarFromCategory(Long id,String categoryName);
     public void addInspectionReport(Long id, CarInspectionReport carInspectionReport);

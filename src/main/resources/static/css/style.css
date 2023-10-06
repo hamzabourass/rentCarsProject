@@ -1,0 +1,30 @@
+/* Other CSS styles... */
+
+/* Custom CSS to set the width of the search input */
+.custom-search-input {
+    width: 500px; /* Adjust the width as needed */
+}
+
+/* Other CSS styles... */
+/* style.css */
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+/* Si vous avez besoin de modifier la couleur du texte du lien actif (active) */
+.navbar-dark .navbar-nav .nav-link.active {
+    color: yellow; /* Couleur pour le lien actif (à personnaliser) */
+}
+
+/* Pour modifier la couleur du texte du lien au survol (hover) */
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: yellow; /* Couleur au survol (à personnaliser) */
+}
+.icon-personalize {
+    margin-left: 50px; /* Ajoute 10 pixels de marge à gauche */
+}
+.custom-margin-right{
+    margin-right: 50px;
+
+
+}

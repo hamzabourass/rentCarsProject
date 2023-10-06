@@ -1,6 +1,7 @@
 package ma.projects.rentcarsproject.repository;
 
 import ma.projects.rentcarsproject.entities.Car;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,8 +13,8 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car,Long> {
     public List<Car> findCarByMake(String make);
     public List<Car> findCarByModel(String model);
-    @Query("select c from Car c where c.make like :x")
-    public List<Car> search(@Param("x") String keyword);
+    @Query("select c from Car c where c.make  like :x")
+    public Page<Car> search(@Param("x") String keyword, Pageable pageable);
 
 
     @Modifying

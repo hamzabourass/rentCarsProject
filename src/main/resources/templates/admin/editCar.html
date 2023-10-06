@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="navs/template.html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Car</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="row mt-3">
+        <div class="col-md-6 offset-3">
+            <div class="card">
+                <div class="card-header bg-primary">Edit Car</div>
+                <div class="card-body">
+                    <div class="p-3">
+                        <form th:action="@{saveCar}" method="post">
+                            <div class="mb-2">
+                                <input type="hidden" name="id" class="form-control" th:value="${car.id}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Make</label>
+                                <input type="text" name="make" class="form-control" th:value="${car.make}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Model</label>
+                                <input type="text" name="model" class="form-control" th:value="${car.model}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Type</label>
+                                <input type="text" name="type" class="form-control" th:value="${car.type}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Price</label>
+                                <input type="text" name="price" class="form-control" th:value="${car.price}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Year</label>
+                                <input type="text" name="carYear" class="form-control" th:value="${car.carYear}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Rate</label>
+                                <input type="text" name="dailyRentalRate" class="form-control" th:value="${car.dailyRentalRate}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Description</label>
+                                <input type="text" name="description" class="form-control" th:value="${car.description}">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Availability</label>
+                                <label>
+                                    <input type="checkbox" name="available" class="form-check-input" th:checked="${car.available}">
+                                </label>
+                            </div>
+
+                            <button class="btn btn-success">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

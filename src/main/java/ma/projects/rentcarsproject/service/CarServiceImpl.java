@@ -11,6 +11,8 @@ import ma.projects.rentcarsproject.repository.CarInspecReportRepository;
 import ma.projects.rentcarsproject.repository.CarRepository;
 import ma.projects.rentcarsproject.repository.CategoryRepository;
 import ma.projects.rentcarsproject.repository.LocationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,7 +97,8 @@ public class CarServiceImpl implements CarService{
     @Override
     public Optional<Car> updateCar(Long id) {
         Optional<Car> carFound = getCarById(id);
-        carFound.ifPresent(this::createCar);
+        Car car = carFound.orElse(null);
+        carFound.ifPresent(c -> carRepository.save(car));
         return carFound;
     }
 
@@ -136,9 +139,9 @@ public class CarServiceImpl implements CarService{
         }
     }
     @Override
-    public List<Car> search(String keyword) {
+    public Page<Car> search(String keyword, Pageable pageable) {
         try {
-            List<Car> cars = carRepository.search(keyword);
+            Page<Car> cars = carRepository.search("%"+keyword+"%",pageable);
             if (cars.isEmpty()){
                 throw new CarNotFoundException("Car with  " + keyword + " not found");
             }else {
