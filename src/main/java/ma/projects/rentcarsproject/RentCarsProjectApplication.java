@@ -11,7 +11,10 @@ import ma.projects.rentcarsproject.service.CarService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.List;
 
 
 @SpringBootApplication
+
 public class RentCarsProjectApplication {
 
     public static void main(String[] args) {
@@ -42,6 +46,12 @@ public class RentCarsProjectApplication {
                     .available(true)
                     .model("Logan")
                     .price(300).build();
+            Car car3 =  Car.builder()
+                    .make("Renault")
+                    .CarYear(2020)
+                    .available(true)
+                    .model("Capture")
+                    .price(500).build();
             Location location =Location.builder()
                     .address("aeroport")
                     .name("tijani")
@@ -56,30 +66,22 @@ public class RentCarsProjectApplication {
                     .reportDetails("this Car is in Good shape").build();
             CarInspectionReport carInspectionReport1 = CarInspectionReport.builder()
                     .inspectionDate(LocalDateTime.of(2023, 10, 4, 14, 30, 0))
-                    .reportDetails("this Car is in ver GOOD shape").build();
+                    .reportDetails("this Car is in very GOOD shape").build();
 
             carInspecReportRepository.save(carInspectionReport);
             carInspecReportRepository.save(carInspectionReport1);
+            carService.createCar(car3);
             carService.createCar(car);
             carService.createCar(car2);
-            carService.addInspectionReport(car.getId(),carInspectionReport);
-            carService.addInspectionReport(car2.getId(),carInspectionReport1);
-            carService.addCarToLocation(car.getId(), location1.getName());
-            carService.addCarToCategory(car.getId(), category1.getName());
-            carService.addCarToLocation(car2.getId(), location1.getName());
-            carService.addCarToCategory(car2.getId(), category1.getName());
-            carService.removeCarFromCategory(car.getId(),category1.getName());
-            carService.removeCarFromLocation(car2.getId(), location1.getName());
             List<String> imageUrl1 = new ArrayList<>();
-            imageUrl1.add("src/main/resources/carPhotos/Dacia Logan.jpg");
+            imageUrl1.add("DaciaLogan.jpg");
             List<String> imageUrl2 = new ArrayList<>();
-            imageUrl2.add("src/main/resources/carPhotos/Toyota Hybrid.jpg");
+            imageUrl2.add("Toyota Hybrid.jpg");
+            List<String> imageUrl3 = new ArrayList<>();
+            imageUrl3.add("R.jpg");
             carService.addImageUrlsToCar(car.getId(),imageUrl2);
             carService.addImageUrlsToCar(car2.getId(),imageUrl1);
-
-
-
-
+            carService.addImageUrlsToCar(car3.getId(),imageUrl3);
 
         };
     }
