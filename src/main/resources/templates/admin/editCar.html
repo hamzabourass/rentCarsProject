@@ -18,7 +18,7 @@
                 <div class="card-header bg-primary">Edit Car</div>
                 <div class="card-body">
                     <div class="p-3">
-                        <form th:action="@{saveCar}" method="post">
+                        <form th:action="@{saveCar}" method="post" enctype="multipart/form-data">
                             <div class="mb-2">
                                 <input type="hidden" name="id" class="form-control" th:value="${car.id}">
                             </div>
@@ -58,11 +58,19 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Images</label>
-                                <ul class="no-bullets">
-
-                                    <li th:each="imageUrl : ${imageUrls}">
-                                        <img th:src="@{'/carPhotos/' + ${imageUrl}}" alt="" class="img-fluid rounded mx-auto">                                    </li>
-                                </ul>
+                                <div class="row">
+                                    <!-- Loop through the image URLs and display them in columns -->
+                                    <div th:each="imageUrl, iterStat : ${imageUrls}" class="col-md-3 mb-2">
+                                        <div class="text-center">
+                                            <img th:src="@{'/carPhotos/' + ${imageUrl}}" alt="" class="img-fluid rounded mx-auto img-fixed-size">
+                                            <button type="button" class="btn btn-danger delete-button mt-1" th:id="'deleteButton-' + ${iterStat.index}"><i class="bi bi-trash-fill"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">New Images</label>
+                                <input type="file" name="files" multiple>
                             </div>
 
                             <button class="btn btn-success">Save</button>

@@ -32,3 +32,9 @@ ul.no-bullets {
     list-style-type: none;
     padding: 0;
 }
+/* CSS to set a fixed size for images */
+.img-fixed-size {
+    width: 120px; /* Adjust the width as needed */
+    height: 80px; /* Adjust the height as needed */
+    object-fit: cover; /* This property ensures that the image fills the specified dimensions while maintaining its aspect ratio */
+}

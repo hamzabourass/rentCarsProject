@@ -130,7 +130,7 @@ public class CarServiceImpl implements CarService{
             List<String> existingImageUrls = car.getImageUrls();
             existingImageUrls.addAll(imageUrls);
             car.setImageUrls(existingImageUrls);
-            carRepository.save(car);
+            createCar(car);
 
         } else {
             // Handle the case where the Car with the given ID doesn't exist
