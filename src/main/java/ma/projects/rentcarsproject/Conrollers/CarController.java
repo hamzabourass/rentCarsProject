@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,34 +63,39 @@ public class CarController {
         return "admin/editCar";
     }
     @PostMapping("/admin/saveCar")
-    public String saveCar(Car car, @RequestParam("files") MultipartFile[] files) {
-        // Create a list to store both existing and new image URLs
-        List<String> allImageUrls = new ArrayList<>(car.getImageUrls());
+    public String saveCar(@ModelAttribute Car car, @RequestParam("files") MultipartFile[] files) {
+        List<String> newImageUrls = new ArrayList<>();
 
-        for (MultipartFile file : files) {
-            if (!file.isEmpty()) {
-                try {
-                    byte[] bytes = file.getBytes();
-                    String fileName = "Car" + System.currentTimeMillis() + ".jpg";
-                    String relativePath = "carPhotos/" + fileName; // No leading slash
-                    Path path = Paths.get("src/main/resources/static", relativePath); // Use src/main/resources/static as the base path
+        if (files != null) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    try {
+                        byte[] bytes = file.getBytes();
+                        String fileName = "Car" + System.currentTimeMillis() + ".jpg";
+                        Path path = Paths.get("src/main/resources/static/carPhotos", fileName); // Use src/main/resources/static as the base path
 
-                    Files.write(path, bytes);
-                    allImageUrls.add(fileName); // Add the new image URL to the list
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        Files.write(path, bytes);
+                        newImageUrls.add(fileName); // Add the new image URL to the list
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
+        // Remplacer les URL d'images existantes par les nouvelles URL (si des nouvelles ont été ajoutées)
+        if (!newImageUrls.isEmpty()) {
+            car.setImageUrls(newImageUrls);
+        }
 
-        // Update the car's imageUrls with the combined lists
-        // Save the car with the updated image URLs
-        //Car car1 = carService.createCar(car);
-        carService.addImageUrlsToCar(car.getId(), allImageUrls);
+        carService.updateCar(car); // Utilisez une méthode de mise à jour appropriée de votre service
 
-
-        // Redirect to the dashboard or any other appropriate page
         return "redirect:/admin/dashboard?keyword=" + car.getMake();
+    }
+
+    @PostMapping("/admin/deleteImage")
+    String deleteImage(@RequestParam String imageUrl, @RequestParam("id") Long carId){
+        carService.removeImageFromCar(carId, imageUrl);
+        return "redirect:/admin/editCar?id="+carId;
     }
 
     @GetMapping("/sidbar")

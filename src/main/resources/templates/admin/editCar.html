@@ -18,6 +18,16 @@
                 <div class="card-header bg-primary">Edit Car</div>
                 <div class="card-body">
                     <div class="p-3">
+
+                        <div class="row">
+                        <div th:each="imageUrl, iterStat : ${imageUrls}" class="col-md-3 mb-2">
+                            <div class="text-center">
+                                <img th:src="@{'/carPhotos/' + ${imageUrl}}" alt="" class="img-fluid rounded mx-auto img-fixed-size">
+                                <form th:action="@{/admin/deleteImage(imageUrl=${imageUrl},id=${car.id})}" method="post">
+                                    <button type="submit" class="btn btn-danger delete-button mt-1"><i class="bi bi-trash-fill"></i></button>
+                                </form>
+                            </div>
+                        </div>
                         <form th:action="@{saveCar}" method="post" enctype="multipart/form-data">
                             <div class="mb-2">
                                 <input type="hidden" name="id" class="form-control" th:value="${car.id}">
@@ -46,6 +56,7 @@
                                 <label class="form-label">Rate</label>
                                 <input type="text" name="dailyRentalRate" class="form-control" th:value="${car.dailyRentalRate}">
                             </div>
+                         
                             <div class="mb-2">
                                 <label class="form-label">Description</label>
                                 <input type="text" name="description" class="form-control" th:value="${car.description}">
@@ -58,22 +69,13 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Images</label>
-                                <div class="row">
-                                    <!-- Loop through the image URLs and display them in columns -->
-                                    <div th:each="imageUrl, iterStat : ${imageUrls}" class="col-md-3 mb-2">
-                                        <div class="text-center">
-                                            <img th:src="@{'/carPhotos/' + ${imageUrl}}" alt="" class="img-fluid rounded mx-auto img-fixed-size">
-                                            <button type="button" class="btn btn-danger delete-button mt-1" th:id="'deleteButton-' + ${iterStat.index}"><i class="bi bi-trash-fill"></i></button>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
                             <div class="mb-2">
                                 <label class="form-label">New Images</label>
                                 <input type="file" name="files" multiple>
                             </div>
 
-                            <button class="btn btn-success">Save</button>
+                            <button class="btn btn-success" type="submit">Save</button>
                         </form>
                     </div>
                 </div>

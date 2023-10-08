@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,9 +129,12 @@ public class CarServiceImpl implements CarService{
 
             Car car = optionalCar.get();
             List<String> existingImageUrls = car.getImageUrls();
+
+            // Ajoutez chaque nouvelle URL d'image à la liste existante
             existingImageUrls.addAll(imageUrls);
+
             car.setImageUrls(existingImageUrls);
-            createCar(car);
+            carRepository.save(car);
 
         } else {
             // Handle the case where the Car with the given ID doesn't exist
@@ -180,4 +184,51 @@ public class CarServiceImpl implements CarService{
             carRepository.save(car);
         });
     }
-}
+
+    @Override
+    public void removeImageFromCar(Long carId, String imageName) {
+
+        Optional<Car> carById = getCarById(carId);
+        Car car = carById.orElse(null);
+        if (car!=null){
+            // Supprimez l'élément s'il correspond à la chaîne à supprimer
+            car.getImageUrls().removeIf(element -> element.equals(imageName));
+            carRepository.save(car);
+        }
+    }
+
+        public void updateCar(Car updatedCar) {
+            Optional<Car> existingCar = carRepository.findById(updatedCar.getId());
+
+            if (existingCar.isPresent()) {
+                Car car = existingCar.get();
+                // Mettre à jour les autres propriétés de la voiture (make, model, etc.)
+                car.setMake(updatedCar.getMake());
+                car.setModel(updatedCar.getModel());
+                car.setType(updatedCar.getType());
+                car.setPrice(updatedCar.getPrice());
+                car.setCarYear(updatedCar.getCarYear());
+                car.setDailyRentalRate(updatedCar.getDailyRentalRate());
+                car.setDescription(updatedCar.getDescription());
+                car.setAvailable(updatedCar.isAvailable());
+                // Mettre à jour les images uniquement si de nouvelles images ont été ajoutées
+                List<String> existingImages = car.getImageUrls();
+                List<String> newImages = updatedCar.getImageUrls();
+
+                if (newImages != null && !newImages.isEmpty()) {
+                    existingImages.addAll(newImages);
+                    car.setImageUrls(existingImages);
+                }
+
+                carRepository.save(car);
+            } else {
+                // Gérer le cas où la voiture n'a pas été trouvée
+                throw new CarNotFoundException("Car not found with ID: " + updatedCar.getId());
+            }
+        }
+    }
+
+
+
+
+

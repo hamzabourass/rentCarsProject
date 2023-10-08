@@ -35,6 +35,7 @@ public interface CarService {
     public void removeCarFromCategory(Long id,String categoryName);
     public void addInspectionReport(Long id, CarInspectionReport carInspectionReport);
     public void updateInspectionReport(Long id,CarInspectionReport carInspectionReport);
-
+    public void removeImageFromCar(Long carId,String imageName);
+    public void updateCar(Car updatedCar);
 
 }

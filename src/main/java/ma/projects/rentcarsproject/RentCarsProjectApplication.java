@@ -51,28 +51,19 @@ public class RentCarsProjectApplication {
                     .CarYear(2020)
                     .available(true)
                     .model("Capture")
-                    .price(500).build();
-            Location location =Location.builder()
-                    .address("aeroport")
-                    .name("tijani")
-                    .latitude(3)
-                    .longitude(4).build();
-            Category category = Category.builder().name("Meduim").build();
-
-            Location location1 = locationRepository.save(location);
-            Category category1 =categoryRepository.save(category);
-            CarInspectionReport carInspectionReport = CarInspectionReport.builder()
-                    .inspectionDate(LocalDateTime.of(2023, 10, 4, 14, 30, 0))
-                    .reportDetails("this Car is in Good shape").build();
-            CarInspectionReport carInspectionReport1 = CarInspectionReport.builder()
-                    .inspectionDate(LocalDateTime.of(2023, 10, 4, 14, 30, 0))
-                    .reportDetails("this Car is in very GOOD shape").build();
-
-            carInspecReportRepository.save(carInspectionReport);
-            carInspecReportRepository.save(carInspectionReport1);
-            carService.createCar(car3);
+                    .type("Normal")
+                    .price(600).build();
+            Car car4 =  Car.builder()
+                    .make("Mercedes")
+                    .CarYear(2020)
+                    .available(true)
+                    .model("Benz")
+                    .price(1000).build();
             carService.createCar(car);
             carService.createCar(car2);
+            carService.createCar(car3);
+            carService.createCar(car4);
+
             List<String> imageUrl1 = new ArrayList<>();
             imageUrl1.add("DaciaLogan.jpg");
             List<String> imageUrl2 = new ArrayList<>();
@@ -81,7 +72,6 @@ public class RentCarsProjectApplication {
             imageUrl3.add("R.jpg");
             carService.addImageUrlsToCar(car.getId(),imageUrl2);
             carService.addImageUrlsToCar(car2.getId(),imageUrl1);
-            carService.addImageUrlsToCar(car3.getId(),imageUrl3);
 
         };
     }
