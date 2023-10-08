@@ -29,7 +29,7 @@
                     <div th:if="${errorMessage}" class="alert alert-danger col-md-3 " role="alert">
                         <p th:text="${errorMessage}"></p>
                     </div>
-                    <a class="btn btn-info" >
+                    <a class="btn btn-info" th:href="@{/admin/addCarForm}">
                         <i class="bi bi-plus"></i> Add New Car
                     </a>
                 </div>

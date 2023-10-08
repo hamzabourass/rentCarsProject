@@ -20,7 +20,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller @AllArgsConstructor
 public class CarController {
@@ -96,6 +95,37 @@ public class CarController {
     String deleteImage(@RequestParam String imageUrl, @RequestParam("id") Long carId){
         carService.removeImageFromCar(carId, imageUrl);
         return "redirect:/admin/editCar?id="+carId;
+    }
+    @GetMapping("/admin/addCarForm")
+    public String addCarForm(Model model){
+        Car car = new Car();
+        model.addAttribute("car",car);
+        return "admin/addCar";
+    }
+    @PostMapping("/admin/addCar")
+    public String addCar(@ModelAttribute Car car, @RequestParam("files") MultipartFile[] files){
+        List<String> newImageUrls = new ArrayList<>();
+
+        if (files != null) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    try {
+                        byte[] bytes = file.getBytes();
+                        String fileName = "Car" + System.currentTimeMillis() + ".jpg";
+                        Path path = Paths.get("src/main/resources/static/carPhotos", fileName); // Use src/main/resources/static as the base path
+
+                        Files.write(path, bytes);
+                        newImageUrls.add(fileName); // Add the new image URL to the list
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        car.setImageUrls(newImageUrls);
+        carService.createCar(car); // Utilisez une méthode de mise à jour appropriée de votre service
+
+        return "redirect:/admin/dashboard?keyword=" + car.getMake();
     }
 
     @GetMapping("/sidbar")
