@@ -1,6 +1,8 @@
 package ma.projects.rentcarsproject.entities;
 
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,12 +19,22 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Size(min=4,max=20)
     private String make;
+    @Size(min=4,max=20)
     private String model;
+    @Size(max = 255)
     private String description;
+    @NotNull
+    @Min(1)
     private double price;
+    @Min(1950)
     private int CarYear;
+    @Size(max=20)
     private String type;
+    @Max(5)
     private double dailyRentalRate;
     private boolean available;
 

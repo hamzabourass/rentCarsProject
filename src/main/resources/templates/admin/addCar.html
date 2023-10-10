@@ -13,7 +13,7 @@
 <body>
 <div layout:fragment="content1">
     <div class="row mt-3 page-content">
-        <div class="col-md-6 offset-3">
+        <div class="col-md-6">
             <div class="card ">
                 <div class="card-header bg-primary">Add Car</div>
                 <div class="card-body">
@@ -21,36 +21,47 @@
 
                             <form th:action="@{addCar}" method="post" enctype="multipart/form-data">
                                 <div class="mb-2">
-                                    <input type="hidden" name="id" class="form-control" th:value="${car.id}">
-                                </div>
-                                <div class="mb-2">
                                     <label class="form-label">Make</label>
                                     <input type="text" name="make" class="form-control" th:value="${car.make}">
+                                    <span class="text-danger" th:errors="${car.make}"></span>
+
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Model</label>
                                     <input type="text" name="model" class="form-control" th:value="${car.model}">
+                                    <span class="text-danger" th:errors="${car.model}"></span>
+
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Type</label>
                                     <input type="text" name="type" class="form-control" th:value="${car.type}">
+                                    <span class="text-danger" th:errors="${car.type}"></span>
+
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Price</label>
                                     <input type="text" name="price" class="form-control" th:value="${car.price}">
+                                    <span class="text-danger" th:errors="${car.price}"></span>
+
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Year</label>
                                     <input type="text" name="carYear" class="form-control" th:value="${car.carYear}">
+                                    <span class="text-danger" th:errors="${car.carYear}"></span>
+
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Rate</label>
                                     <input type="text" name="dailyRentalRate" class="form-control" th:value="${car.dailyRentalRate}">
+                                    <span class="text-danger" th:errors="${car.dailyRentalRate}"></span>
+
                                 </div>
 
                                 <div class="mb-2">
                                     <label class="form-label">Description</label>
                                     <input type="text" name="description" class="form-control" th:value="${car.description}">
+                                    <span class="text-danger" th:errors="${car.description}"></span>
+
                                 </div>
                                 <div class="mb-2">
                                     <label class="form-label">Availability</label>

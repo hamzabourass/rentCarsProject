@@ -38,7 +38,7 @@ public class RentCarsProjectApplication {
                     .make("Toyota")
                     .CarYear(2012)
                     .available(true)
-                    .model("C12")
+                    .model("C12C")
                     .price(400).build();
             Car car2 =  Car.builder()
                     .make("Dacia")

@@ -1,5 +1,6 @@
 package ma.projects.rentcarsproject.Conrollers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import ma.projects.rentcarsproject.entities.Car;
 import ma.projects.rentcarsproject.exceptions.CarNotFoundException;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +64,12 @@ public class CarController {
         return "admin/editCar";
     }
     @PostMapping("/admin/saveCar")
-    public String saveCar(@ModelAttribute Car car, @RequestParam("files") MultipartFile[] files) {
+    public String saveCar(@Valid @ModelAttribute("car")Car car,
+                          BindingResult bindingResult,
+                          @RequestParam("files") MultipartFile[] files) {
+        if(bindingResult.hasErrors()) {
+            return "admin/editCar";
+        }
         List<String> newImageUrls = new ArrayList<>();
 
         if (files != null) {
@@ -103,9 +110,13 @@ public class CarController {
         return "admin/addCar";
     }
     @PostMapping("/admin/addCar")
-    public String addCar(@ModelAttribute Car car, @RequestParam("files") MultipartFile[] files){
+    public String addCar(@Valid @ModelAttribute Car car
+            ,BindingResult bindingResult
+            ,@RequestParam("files") MultipartFile[] files){
         List<String> newImageUrls = new ArrayList<>();
-
+        if(bindingResult.hasErrors()) {
+            return "admin/addCar";
+        }
         if (files != null) {
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {

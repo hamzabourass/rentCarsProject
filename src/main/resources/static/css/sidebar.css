@@ -5,16 +5,18 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #333;
-    padding-top: 20px;
+    background-color:aliceblue;
+    padding-top: 30px;
     transition: margin-left 0.3s;
+    overflow-y: auto; /* Permet de faire défiler la barre latérale si elle est trop longue */
+
 }
 
 .sidebar a {
-    padding: 15px;
+    padding: 15px 25px;
     text-decoration: none;
     font-size: 20px;
-    color: white;
+    color: black;
     display: block;
 }
 
@@ -28,6 +30,13 @@
     padding: 15px;
     transition: margin-left 0.3s;
 }
+/* Media Query pour les écrans plus petits (styles lorsque la barre latérale est réduite) */
+@media screen and (max-width: 768px) {
+    .page-content {
+        margin-left: 0; /* Aucune marge à gauche lorsque la barre latérale est réduite */
+        padding: 15px;
+    }
+}
 ul.no-bullets {
     list-style-type: none;
     padding: 0;
@@ -37,4 +46,23 @@ ul.no-bullets {
     width: 120px; /* Adjust the width as needed */
     height: 80px; /* Adjust the height as needed */
     object-fit: cover; /* This property ensures that the image fills the specified dimensions while maintaining its aspect ratio */
+}
+
+
+/* Styles pour le contenu principal */
+.content {
+    margin-left: 300px; /* Largeur de la barre latérale */
+    padding: 20px;
+}
+
+/* Changements de style pour les petits écrans */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* La sidebar occupe toute la largeur de l'écran */
+        position: static;
+    }
+
+    .content {
+        margin-left: 0;
+    }
 }
